@@ -4,7 +4,6 @@ from sys import argv
 
 try:
     import os
-    os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = "C:/Program Files/Git/cmd/git.exe"
     from git import Repo, IndexFile
 except ImportError:
     print("Je mist libraries! Zorg dat je GitPython installeert (via `pip`). Ook kan het zijn dat je het pad naar de Git executable moet aanpassen.")
