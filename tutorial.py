@@ -6,9 +6,8 @@ try:
     import os
     os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = "C:/Program Files/Git/cmd/git.exe"
     from git import Repo, IndexFile
-    import FreeSimpleGUI as sg
 except ImportError:
-    print("Je mist libraries! Zorg dat je GitPython en PySimpleGui installeert (via PyCharm of `pip`). Ook kan het zijn dat je het pad naar de Git executable moet aanpassen.")
+    print("Je mist libraries! Zorg dat je GitPython installeert (via `pip`). Ook kan het zijn dat je het pad naar de Git executable moet aanpassen.")
     exit(-1)
 
 try:
@@ -18,8 +17,6 @@ except Exception:
     print("De library kan je Git executable niet vinden. Pas de run configuration in PyCharm aan, zodat de environment-variabele `GIT_PYTHON_GIT_EXECUTABLE` naar `git.exe` verwijst. Waarschijnlijk bevindt dit programma zich op `\\Program Files\\Git\\bin\\git.exe`.")
     exit(-1)
 
-sg.theme('DarkGrey13')
-
 class Image:
     def __init__(self, *filename):
         self.path = filename
@@ -27,37 +24,21 @@ class Image:
     def print(self):
         print("\n(IMAGE)\n")
 
-    def show(self):
-        return [sg.Image("images/" + p) for p in self.path]
-
 class Heading(str):
     def print(self):
         print("#", self)
-
-    def show(self):
-        return [sg.Text(self, font=("Any 16 bold"))]
 
 class Text(str):
     def print(self):
         print(self)
 
-    def show(self):
-        return [sg.Text(self, font=("Any 12"))]
-
 class Sidenote(str):
     def print(self):
         print(self)
 
-    def show(self):
-        return [sg.Text(self, font=("Any 9 italic"))]
-
 class Code(str):
     def print(self):
         print(self)
-
-    def show(self):
-        return [[sg.Text(self, font=("Courier 12"))],
-                [Sidenote("De code is ook in de output te vinden, om makkelijker te copy-pasten.").show()]]
 
 
 def get_state():
@@ -340,15 +321,6 @@ def exercise(n):
             for line in exercises[n]["text"]:
                 line.print()
 
-            layout = [t.show() for t in exercises[n]["text"]]
-            layout += [[sg.Button("Klaar?")]]
-
-            window = sg.Window('PySimpleGUI', layout)
-
-            event = 0
-            while event != sg.WIN_CLOSED and event != "Klaar?":  # Event Loop
-                event, values = window.read()
-
             if "post" in exercises[n]:
                 exercises[n]["post"]()
 
@@ -357,15 +329,6 @@ def debug(n, stop=12):
         line.print()
 
     print()
-
-    layout = [t.show() for t in exercises[n]["text"]]
-    layout += [[sg.Button("Klaar?")]]
-
-    window = sg.Window('PySimpleGUI', layout)
-
-    event = 0
-    while event != sg.WIN_CLOSED and event != "Klaar?":  # Event Loop
-        event, values = window.read()
 
     if n < stop:
         debug(n+1)

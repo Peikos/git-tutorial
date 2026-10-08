@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z $1 ] ; then
   echo "[1mUsage:[0m update.sh [4mCOMMIT_MSG[0m"
